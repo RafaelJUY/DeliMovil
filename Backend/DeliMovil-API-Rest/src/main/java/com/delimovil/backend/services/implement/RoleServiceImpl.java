@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class IRoleServiceImpl implements IRoleService {
+public class RoleServiceImpl implements IRoleService {
     @Autowired
     private IRoleRepository roleRepository;
 
