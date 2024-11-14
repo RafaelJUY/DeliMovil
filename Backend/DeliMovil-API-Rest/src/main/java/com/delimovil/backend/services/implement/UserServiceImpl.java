@@ -1,16 +1,20 @@
 package com.delimovil.backend.services.implement;
 
 import com.delimovil.backend.dto.UserDTO;
+import com.delimovil.backend.models.entity.Role;
 import com.delimovil.backend.models.entity.User;
+import com.delimovil.backend.repositories.IRoleRepository;
 import com.delimovil.backend.repositories.IUserRepository;
 import com.delimovil.backend.services.interfaces.IUserService;
 import com.delimovil.backend.shared.exception.personalized.ModelNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,13 +23,29 @@ public class UserServiceImpl implements IUserService {
     private IUserRepository userRepository;
 
     @Autowired
+    private IRoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private ModelMapper mapper;
 
     @Override
     @Transactional
     public UserDTO save(UserDTO userDTO) {
-        User user = this.userRepository.save(mapper.map(userDTO, User.class));
-        return mapper.map(user, UserDTO.class);
+        Role role = roleRepository.findByName(userDTO.getRoleName()).orElseThrow(
+                () -> new ModelNotFoundException(userDTO.getRoleName() + "not found")
+        );
+
+        User user = new User();
+        user.setUsername(userDTO.getUsername());
+        user.setRole(role);
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+
+
+        return this.mapper.map(this.userRepository.save(user), UserDTO.class);
+
     }
 
     @Override

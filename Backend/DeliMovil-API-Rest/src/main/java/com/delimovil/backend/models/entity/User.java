@@ -14,6 +14,7 @@ public class User {
 
     @EqualsAndHashCode.Include
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUser;
 
     @ManyToOne

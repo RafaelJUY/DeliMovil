@@ -1,8 +1,6 @@
 package com.delimovil.backend.models.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -15,6 +13,7 @@ public class Role {
 
     @EqualsAndHashCode.Include
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idRole;
 
     @Column(length = 10, nullable = false)

@@ -52,7 +52,8 @@ public class WebSecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/api/restaurant/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+//                        .requestMatchers("/login", "/api/restaurant/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+                        .requestMatchers("/api/users/**", "/api/roles/**", "/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))

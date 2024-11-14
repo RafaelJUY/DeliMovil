@@ -15,7 +15,7 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RoleDTO {
 
-    @NotNull
+//    @NotNull
     private Integer idRole;
 
     @NotNull
