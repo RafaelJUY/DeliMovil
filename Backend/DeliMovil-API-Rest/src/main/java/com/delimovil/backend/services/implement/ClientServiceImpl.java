@@ -2,7 +2,11 @@ package com.delimovil.backend.services.implement;
 
 import com.delimovil.backend.dto.ClientDTO;
 import com.delimovil.backend.dto.ClientRequestDTO;
+import com.delimovil.backend.dto.RoleDTO;
+import com.delimovil.backend.dto.UserDTO;
 import com.delimovil.backend.models.entity.Client;
+import com.delimovil.backend.models.entity.Role;
+import com.delimovil.backend.models.entity.User;
 import com.delimovil.backend.repositories.IClientRepository;
 import com.delimovil.backend.services.interfaces.IClientService;
 import com.delimovil.backend.shared.exception.personalized.ModelNotFoundException;
@@ -24,6 +28,10 @@ public class ClientServiceImpl implements IClientService {
     private ModelMapper mapper;
     @Autowired
     private CloudinaryService cloudinaryService;
+    @Autowired
+    private UserServiceImpl userService;
+    @Autowired
+    private RoleServiceImpl roleService;
     @Override
     @Transactional(readOnly = true)
     public List<ClientDTO> findAll() {
@@ -46,12 +54,21 @@ public class ClientServiceImpl implements IClientService {
 
     @Override
     @Transactional
-    public ClientDTO save(ClientRequestDTO clientDto, MultipartFile image) {
+    public ClientDTO save(UserDTO userDTO) {
+
+        RoleDTO role = roleService.readById(1);     //en la base de datos ya esta creado el rol con id 1 que tiene el nombre de ROLE_CLIENT.
+        String roleName = role.getName();
+        Client client = new Client();
+        userDTO.setIdUser(client.getId());
+        userDTO.setRoleName(roleName);
+
+        UserDTO newUserDTOSaved = userService.save(userDTO);
+
+        User user = mapper.map(newUserDTOSaved, User.class);
+
+        client.setUser_id(user);
 
 
-        Client client = mapper.map(clientDto, Client.class);
-        String imageUrl = cloudinaryService.uploadFile(image);
-        client.setImageUrl(imageUrl);
         Client saveClient = this.clientRepo.save(client);
         return mapper.map(saveClient, ClientDTO.class);
     }

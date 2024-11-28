@@ -1,9 +1,6 @@
 package com.delimovil.backend.models.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity(name = "user_restaurant")
@@ -14,6 +11,10 @@ import lombok.*;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 public class UserRestaurant {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @ManyToOne
     @JoinColumn(name = "user_app_id")
     private User user_app_id;

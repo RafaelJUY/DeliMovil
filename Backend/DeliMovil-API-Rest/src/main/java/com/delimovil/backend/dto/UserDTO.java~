@@ -24,14 +24,14 @@ public class UserDTO {
     @Pattern(regexp = "^ROLE_.*$", message = "El rol debe comenzar con 'ROLE_'")
     private String roleName;
 
-    @NotNull
-    @NotEmpty
+//    @NotNull
+//    @NotEmpty
     @Size(min = 3, max = 50)
     @JsonProperty(value = "user_name")
     private String username;
 
-    @NotNull
-    @NotEmpty
+//    @NotNull
+//    @NotEmpty
     @Size(min = 10, max = 60)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
