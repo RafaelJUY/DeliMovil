@@ -1,10 +1,8 @@
 package com.delimovil.backend.controllers;
 
 import com.delimovil.backend.dto.DeliveryDTO;
-import com.delimovil.backend.dto.DeliveryLoginDTO;
 import com.delimovil.backend.dto.DeliveryRequestDTO;
 import com.delimovil.backend.services.interfaces.IDeliveryService;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

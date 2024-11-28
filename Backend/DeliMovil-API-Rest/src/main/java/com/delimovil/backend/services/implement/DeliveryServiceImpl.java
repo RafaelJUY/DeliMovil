@@ -1,7 +1,6 @@
 package com.delimovil.backend.services.implement;
 
 import com.delimovil.backend.dto.DeliveryDTO;
-import com.delimovil.backend.dto.DeliveryLoginDTO;
 import com.delimovil.backend.dto.DeliveryRequestDTO;
 import com.delimovil.backend.models.entity.Delivery;
 import com.delimovil.backend.repositories.IDeliveryRepository;
@@ -60,10 +59,8 @@ public class DeliveryServiceImpl implements IDeliveryService {
         Delivery deliveryDB = this.deliveryRepo.findById(id).orElseThrow(
                 () -> new ModelNotFoundException(id, Delivery.class.getSimpleName())
         );
-        deliveryDB.setEmail(deliveryDTO.getEmail());
+
         deliveryDB.setPhone(deliveryDTO.getPhone());
-        deliveryDB.setPassword(deliveryDTO.getPassword());
-        deliveryDB.setUserName(deliveryDTO.getUserName());
         deliveryDB.setFirstName(deliveryDTO.getFirstName());
         deliveryDB.setLastName(deliveryDTO.getLastName());
         if (image != null && !image.isEmpty()) {

@@ -16,8 +16,11 @@ import lombok.Setter;
 @ToString
 public class Client {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @OneToOne
+    @JoinColumn(name = "user_app_id")
+    private User user_id;
 
     @Column(length = 45)
     private String first_name;
@@ -35,12 +38,7 @@ public class Client {
     private String number_street;
     @Column(length = 5)
     private String floor_department;
-    @Column(length = 45)
-    private String userName;
-    @Column(length = 20)
-    private String password;
-    @Column(length = 45)
-    private String email;
+
     @Column(length = 250)
     private String imageUrl;
 }

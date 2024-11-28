@@ -1,7 +1,6 @@
 package com.delimovil.backend.services.interfaces;
 
 import com.delimovil.backend.dto.DeliveryDTO;
-import com.delimovil.backend.dto.DeliveryLoginDTO;
 import com.delimovil.backend.dto.DeliveryRequestDTO;
 import org.springframework.web.multipart.MultipartFile;
 

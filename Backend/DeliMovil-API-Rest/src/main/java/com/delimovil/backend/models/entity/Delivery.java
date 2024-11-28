@@ -12,20 +12,18 @@ import lombok.*;
 @ToString
 public class Delivery {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @OneToOne
+    @JoinColumn(name = "user_app_id")
+    private User user_id;
     @Column(length = 45)
     private String firstName;
     @Column(length = 45)
     private String lastName;
     @Column(length = 20)
     private String phone;
-    @Column(length = 45)
-    private String userName;
-    @Column(length = 20)
-    private String password;
-    @Column(length = 45)
-    private String email;
+
     @Column(length = 250)
     private String imageUrl;
 

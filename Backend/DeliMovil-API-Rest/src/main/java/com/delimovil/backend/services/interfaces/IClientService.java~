@@ -13,6 +13,7 @@ public interface IClientService {
     public ClientDTO save(ClientRequestDTO clientDTO, MultipartFile image);
     public ClientDTO update(ClientRequestDTO clientDTO, MultipartFile image, Integer id);
     public void deleteById(Integer id);
+    ClientDTO findByEmailAndPassword(String email, String password);
 
     
 }
