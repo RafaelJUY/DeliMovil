@@ -61,6 +61,7 @@ public class LocalServiceImpl implements ILocalService {
 
         RoleDTO role = roleService.readById(3);
         String roleName = role.getName();
+        Local local = new Local();
         userDto.setIdUser(local.getId());
         userDto.setRoleName(roleName);
         UserDTO userSaved = userService.save(userDto);

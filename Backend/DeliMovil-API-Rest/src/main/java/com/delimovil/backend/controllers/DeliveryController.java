@@ -2,7 +2,9 @@ package com.delimovil.backend.controllers;
 
 import com.delimovil.backend.dto.DeliveryDTO;
 import com.delimovil.backend.dto.DeliveryRequestDTO;
+import com.delimovil.backend.dto.UserDTO;
 import com.delimovil.backend.services.interfaces.IDeliveryService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,9 +33,8 @@ public class DeliveryController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<DeliveryDTO> createDelivery(
-            @RequestPart("delivery") DeliveryRequestDTO delivery,
-            @RequestPart("image") MultipartFile image){
-        return ResponseEntity.status(HttpStatus.CREATED).body(deliveryService.save(delivery, image));
+            @Valid @RequestBody UserDTO userDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(deliveryService.save(userDto));
     }
 
     @PatchMapping("/{id}")

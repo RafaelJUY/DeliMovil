@@ -3,6 +3,7 @@ package com.delimovil.backend.controllers;
 import com.delimovil.backend.dto.LocalCreateDTO;
 import com.delimovil.backend.dto.LocalDTO;
 import com.delimovil.backend.dto.LocalRequestDTO;
+import com.delimovil.backend.dto.UserDTO;
 import com.delimovil.backend.services.interfaces.ILocalService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -31,8 +32,9 @@ public class LocalController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<LocalDTO> createLocal(@Valid @RequestBody LocalCreateDTO local) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(localService.save(local));
+    public ResponseEntity<LocalDTO> createLocal( @Valid @RequestPart("local") LocalCreateDTO local,
+                                                 @Valid @RequestPart("user") UserDTO userDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(localService.save(local, userDto));
     }
 
     @PatchMapping("/{id}")

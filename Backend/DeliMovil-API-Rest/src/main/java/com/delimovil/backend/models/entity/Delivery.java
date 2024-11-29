@@ -13,7 +13,7 @@ import lombok.*;
 public class Delivery {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @OneToOne
     @JoinColumn(name = "user_app_id")
     private User user_id;

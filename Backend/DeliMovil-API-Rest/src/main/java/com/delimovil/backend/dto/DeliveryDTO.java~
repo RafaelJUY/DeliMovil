@@ -15,7 +15,7 @@ public class DeliveryDTO {
     @NotNull
     @Min(1)
     private Integer id;
-
+    
     @Size(min = 2, max = 45)
     private String firstName;
 

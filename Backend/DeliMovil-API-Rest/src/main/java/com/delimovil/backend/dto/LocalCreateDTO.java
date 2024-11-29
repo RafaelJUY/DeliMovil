@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LocalCreateDTO {
-    @NotBlank
+
     @Size(min = 3, max = 45)
     private String name;
     @NotNull
