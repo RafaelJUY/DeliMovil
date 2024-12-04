@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface IClientRepository extends JpaRepository <Client, Integer> {
-
+    
 }

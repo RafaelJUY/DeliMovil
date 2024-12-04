@@ -56,7 +56,7 @@ public class ClientServiceImpl implements IClientService {
     @Transactional
     public ClientDTO save(UserDTO userDTO) {
 
-        RoleDTO role = roleService.readById(1);     //en la base de datos ya esta creado el rol con id 1 que tiene el nombre de ROLE_CLIENT.
+        RoleDTO role = roleService.readById(1);     //en la base de datos ya esta creado el rol con id 1 que tiene el nombre de 
         String roleName = role.getName();
         Client client = new Client();
         userDTO.setIdUser(client.getId());
