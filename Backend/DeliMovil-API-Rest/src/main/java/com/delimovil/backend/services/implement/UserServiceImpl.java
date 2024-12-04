@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements IUserService {
+
     @Autowired
     private IUserRepository userRepository;
 
@@ -34,26 +35,41 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public UserDTO save(UserDTO userDTO) {
-        Role role = roleRepository.findByName(userDTO.getRoleName()).orElseThrow(
-                () -> new ModelNotFoundException(userDTO.getRoleName() + "not found")
-        );
+        String role = userDTO.getRoleName();
+
+        Optional<Role> optionalRoleUser = roleRepository.findByName(role);
 
         User user = new User();
+        user.setRole(optionalRoleUser.orElseThrow(() -> new ModelNotFoundException("role not found: " + role)));
         user.setUsername(userDTO.getUsername());
-        user.setRole(role);
+        user.setEnabled(userDTO.isEnabled());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
-
-        return this.mapper.map(this.userRepository.save(user), UserDTO.class);
-
+        return mapper.map(userRepository.save(user), UserDTO.class);
     }
 
     @Override
     @Transactional
     public UserDTO update(UserDTO userDTO) {
-        this.readById(userDTO.getIdUser());
+        String role = userDTO.getRoleName();
+        Optional<Role> optionalRoleUser = roleRepository.findByName(role);
 
-        User user = this.userRepository.save(mapper.map(userDTO, User.class));
+        User user = new User();
+        user.setIdUser(userDTO.getIdUser());
+        user.setRole(optionalRoleUser.orElseThrow(() -> new ModelNotFoundException("role not found: " + role)));
+        user.setUsername(userDTO.getUsername());
+        user.setEnabled(userDTO.isEnabled());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+
+        return mapper.map(userRepository.save(user), UserDTO.class);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserDTO readById(Integer id) {
+        User user = this.userRepository.findById(id).orElseThrow(
+                () -> new ModelNotFoundException(id, User.class.getSimpleName())
+        );
         return mapper.map(user, UserDTO.class);
     }
 
@@ -68,18 +84,16 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public UserDTO readById(Integer id) {
-        User user = this.userRepository.findById(id).orElseThrow(
-                () -> new ModelNotFoundException(id, User.class.getSimpleName())
-        );
-        return mapper.map(user, UserDTO.class);
-    }
-
-    @Override
     @Transactional
     public void delete(Integer id) {
         this.readById(id);
         this.userRepository.deleteById(id);
     }
+
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
 }
