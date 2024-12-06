@@ -43,16 +43,58 @@ public class SpringSecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests((authz) -> authz
-                        .requestMatchers(HttpMethod.GET, "/api/users").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
+                        // Categories
+                        .requestMatchers(HttpMethod.GET, "/api/categories").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/categories").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/categories/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/categories/*").hasRole("ADMIN")
+
+                        // Products
+                        .requestMatchers(HttpMethod.GET, "/api/products").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/products").hasRole("LOCAL")
-                        .requestMatchers(HttpMethod.GET, "/api/restaurant").hasRole("ADMIN")
-                        // .requestMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
-                        // .requestMatchers(HttpMethod.GET, "/api/products", "/api/products/{id}").hasAnyRole("ADMIN", "USER")
-                        // .requestMatchers(HttpMethod.POST, "/api/products").hasRole("ADMIN")
-                        // .requestMatchers(HttpMethod.PUT, "/api/products/{id}").hasRole("ADMIN")
-                        // .requestMatchers(HttpMethod.DELETE, "/api/products/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/products/*").hasRole("LOCAL")
+                        .requestMatchers(HttpMethod.DELETE, "/api/products/*").hasRole("LOCAL")
+
+                        // Client
+                        .requestMatchers(HttpMethod.GET, "/api/client").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/client").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/api/client").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.DELETE, "/api/client").hasAnyRole("CLIENT", "ADMIN")
+
+                        // Delivery
+                        .requestMatchers(HttpMethod.GET, "/api/delivery").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/delivery").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/api/delivery/*").hasRole("DELIVERY")
+                        .requestMatchers(HttpMethod.DELETE, "/api/delivery/*").hasAnyRole("DELIVERY", "ADMIN")
+
+                        // Restaurant
+                        .requestMatchers(HttpMethod.GET, "/api/restaurant").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/restaurant").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/restaurant/*").hasRole("RESTAURANT")
+                        .requestMatchers(HttpMethod.DELETE, "/api/restaurant/*").hasRole("ADMIN")
+
+                        // Local
+                        .requestMatchers(HttpMethod.GET, "/api/local").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/local").hasRole("RESTAURANT")
+                        .requestMatchers(HttpMethod.PATCH, "/api/local").hasRole("RESTAURANT")
+                        .requestMatchers(HttpMethod.DELETE, "/api/local").hasRole("RESTAURANT")
+
+                        // Order
+                        .requestMatchers(HttpMethod.GET, "/api/order").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.POST, "/api/order").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.PATCH, "/api/order").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.DELETE, "/api/order/*").hasRole("ADMIN")
+
+                        // Role
+                        .requestMatchers(HttpMethod.GET, "/api/roles").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/roles").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/roles").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/roles").hasRole("ADMIN")
+
+                        // User
+                        .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
+
                         .anyRequest().authenticated())
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
                 .addFilter(new JwtValidationFilter(authenticationManager()))
