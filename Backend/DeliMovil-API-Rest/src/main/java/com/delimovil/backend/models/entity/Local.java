@@ -11,11 +11,12 @@ import lombok.*;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 public class Local {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     private Integer id;
+    @ManyToOne
+    @JoinColumn(name = "user_app_id")
+    private User user_id;
     @Column(length = 45)
     private String name;
     @Column(length = 45)

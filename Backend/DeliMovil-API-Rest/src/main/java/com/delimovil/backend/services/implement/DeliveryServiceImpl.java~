@@ -65,9 +65,11 @@ public class DeliveryServiceImpl implements IDeliveryService {
 
         delivery.setUser_id(user);
 
-        Delivery saveDelivery = this.deliveryRepo.save(delivery);
-        return mapper.map(saveDelivery, DeliveryDTO.class);
-
+        Delivery delivery = mapper.map(deliveryDTO, Delivery.class);
+        String imageUrl = cloudinaryService.uploadFile(image);
+        delivery.setImageUrl(imageUrl);
+        Delivery savedDelivery = this.deliveryRepo.save(delivery);
+        return mapper.map(savedDelivery, DeliveryDTO.class);
     }
 
     @Override

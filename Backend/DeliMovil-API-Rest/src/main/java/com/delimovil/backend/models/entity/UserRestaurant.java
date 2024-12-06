@@ -3,28 +3,26 @@ package com.delimovil.backend.models.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
+@Entity(name = "user_restaurant")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
-public class Delivery {
+public class UserRestaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @OneToOne
+
+    @ManyToOne
     @JoinColumn(name = "user_app_id")
-    private User user_id;
+    private User user_app_id;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
     @Column(length = 45)
     private String firstName;
     @Column(length = 45)
     private String lastName;
-    @Column(length = 20)
-    private String phone;
-
-    @Column(length = 250)
-    private String imageUrl;
-
 }

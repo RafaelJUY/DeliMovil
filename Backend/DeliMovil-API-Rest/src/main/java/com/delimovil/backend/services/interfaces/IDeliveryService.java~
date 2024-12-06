@@ -11,8 +11,10 @@ import java.util.List;
 public interface IDeliveryService {
     public List<DeliveryDTO> findAll();
     public DeliveryDTO findById(Integer id);
-    public DeliveryDTO save(UserDTO userDto);
+    public DeliveryDTO save(DeliveryRequestDTO deliveryDTO, MultipartFile image);
 
+    @Transactional
+    DeliveryDTO save(UserDTO userDto);
 
     public DeliveryDTO update(DeliveryRequestDTO deliveryDTO, MultipartFile image, Integer id);
     public void deleteById(Integer id);

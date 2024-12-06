@@ -1,9 +1,8 @@
 package com.delimovil.backend.dto;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,11 +12,17 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LocalCreateDTO {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class RoleDTO {
 
-    @Size(min = 3, max = 45)
-    private String name;
+//    @NotNull
+    private Integer idRole;
+
     @NotNull
-    @Min(1)
-    private Integer restaurant_id;
+    @NotEmpty
+    private String name;
+
+    @NotNull
+    private boolean enabled;
 }
+

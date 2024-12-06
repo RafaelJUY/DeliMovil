@@ -12,15 +12,15 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientLoginDTO {
+public class DeliveryRequestDTO {
     @NotBlank
-    @Size(min = 8, max = 45)
-    private String userName;
+    @Size(min = 2, max = 45)
+    private String firstName;
     @NotBlank
-    @Size(min = 8, max = 20)
-    private String password;
+    @Size(min = 2, max = 45)
+    private String lastName;
     @NotBlank
-    @Size(min = 12, max = 45)
-    @Email
-    private String email;
+    @Size(min = 2, max = 20)
+    private String phone;
+
 }
